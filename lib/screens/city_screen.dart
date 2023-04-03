@@ -29,15 +29,19 @@ class _CityScreenState extends State<CityScreen> {
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
+                    color: Colors.white,
                   ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
+                //TODO: Step 37 - Insert a TextField widget here
                 child: null,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  //TODO: Step 38 - Go back to the previous screen using Navigator.pop() passing the cityName property
+                },
                 child: Text(
                   'Get Weather',
                   style: kButtonTextStyle,
