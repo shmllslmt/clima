@@ -81,6 +81,5 @@ flutter:
       fonts:
         - asset: fonts/SpartanMB-Black.otf
           weight: 900
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
