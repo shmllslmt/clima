@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:clima_flutter/services/location.dart';
 //TODO: Step 12 - Add the http package dependency and import the http.dart file
 //TODO: Step 16 - Import dart:convert
 
@@ -16,17 +16,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void getLocation() async {
     //Wrap in a try and catch block in the case that the device location cannot be retrieved
     try {
-      LocationPermission locationPermission = await Geolocator
-          .requestPermission();
-
-      if (LocationPermission.whileInUse == locationPermission ||
-          LocationPermission.always == locationPermission) {
-        Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.low);
-
-        //Print the current location of the device
-        print(position);
-      }
+      //Create a Location object, call the getCurrentLocation() method and print the latitude and longitude value
+      Location location = Location();
+      await location.getCurrentLocation();
+      print(location.latitude);
+      print(location.longitude);
     } catch(e) {
       print(e);
     }
@@ -41,10 +35,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getLocation();
   }
 
-
-
-  //TODO: Step 7 - Move the code in the getLocation() method into the location.dart file
-  //TODO: Step 11 - In the getLocation() method, create a Location object, call the getCurrentLocation() method and print the latitude and longitude value
 
   //TODO: Step 23 - Combine the getLocation() and getData() method, create a NetworkHelper object in the method, call the getData() method
   //TODO: Step 24 - Go to LocationScreen using Navigator.push()
