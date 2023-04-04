@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:clima_flutter/services/location.dart';
-//TODO: Step 12 - Add the http package dependency and import the http.dart file
+import 'package:http/http.dart';
 //TODO: Step 16 - Import dart:convert
+
+const String apiKey = '93228ccfc3f4697fe4ff3c5014d01d20';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -16,9 +18,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void getLocation() async {
     //Wrap in a try and catch block in the case that the device location cannot be retrieved
     try {
-      //Create a Location object, call the getCurrentLocation() method and print the latitude and longitude value
+      //Create a Location object
       Location location = Location();
+      //Call the getCurrentLocation() method
       await location.getCurrentLocation();
+
+      //Print the latitude and longitude value
       print(location.latitude);
       print(location.longitude);
     } catch(e) {
@@ -40,14 +45,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
   //TODO: Step 24 - Go to LocationScreen using Navigator.push()
   //TODO: Step 28 - Pass the weatherData property to LocationScreen
 
-  //TODO: Step 13 - Create a getData() method that will make an API call to openweathermap using the http get method
+  //Create a getData() method that will make an API call to openweathermap using the http get method
+  void getData() async {
+      var response = await get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=$apiKey'));
+
+      //Print the response body if the statusCode is equal to 200, else, print the statusCode
+      if(response.statusCode == 200) {
+        print(response.body);
+      } else
+        print(response.statusCode);
+  }
   //TODO: Step 19 - Instead of using sample latitude and longitude, use our very own latitude and longitude value
-  //TODO: Step 14 - Try and print the response body and statusCode
-  //TODO: Step 15 - Print the response body if the statusCode is equal to 200, else, print the statusCode
+
   //TODO: Step 17 - Use jsonDecode to unpack the response body data (temp, weather id, city name)
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       body: Center(
         //TODO: Step 25 - Add the flutter spinkit dependency, then add the SpinKitDoubleBounce widget as the child of the Center widget
