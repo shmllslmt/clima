@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 //TODO: Step 12 - Add the http package dependency and import the http.dart file
 //TODO: Step 16 - Import dart:convert
 
@@ -11,17 +12,36 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
   //TODO: Step 18 - Create two double variables: latitude and longitude
-  //TODO: Step 2 - Create a getLocation() method that will get the current location of the device
-  //   LocationPermission locationPermission = await Geolocator.requestPermission();
-  //
-  //   if(LocationPermission.whileInUse == locationPermission || LocationPermission.always == locationPermission) {
-  //    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-  //   }
-  //TODO: Step 3 - Print the current location of the device
+  //Create a getLocation() method that will get the current location of the device
+  void getLocation() async {
+    //Wrap in a try and catch block in the case that the device location cannot be retrieved
+    try {
+      LocationPermission locationPermission = await Geolocator
+          .requestPermission();
 
-  //TODO: Step 5 - Instead of having to click a button to print the current location of the device, print the current location straightaway when LoadingScreen appears
+      if (LocationPermission.whileInUse == locationPermission ||
+          LocationPermission.always == locationPermission) {
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.low);
 
-  //TODO: Step 6 - Wrap the get the current location code in a try and catch block in the case that the device location cannot be retrieved
+        //Print the current location of the device
+        print(position);
+      }
+    } catch(e) {
+      print(e);
+    }
+  }
+
+
+
+  //Instead of having to click a button to print the current location of the device, print the current location straightaway when LoadingScreen appears
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+  }
+
+
 
   //TODO: Step 7 - Move the code in the getLocation() method into the location.dart file
   //TODO: Step 11 - In the getLocation() method, create a Location object, call the getCurrentLocation() method and print the latitude and longitude value
@@ -44,9 +64,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         //TODO: Step 26 - Change the color to white, and size to 100
         child: ElevatedButton(
           onPressed: () {
-            //TODO: Step 4 - Call the getLocation() method
           },
-          //TODO: Step 1 - Add the geolocator dependencies in pubspec.yaml
           child: Text('Get Location'),
         ),
       ),
