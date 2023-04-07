@@ -1,23 +1,45 @@
+import 'package:clima_flutter/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_flutter/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
-  //TODO: Step 29 - Create a final locationWeather property
-  const LocationScreen({Key? key}) : super(key: key);
+  //Create a final locationWeather property
+  final locationWeather;
+
+  LocationScreen({required this.locationWeather});
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  //TODO: Step 35 - Create a weatherModel object
+  int? temp;
+  String? weatherIcon;
+  String? weatherMessage;
+  String? city_name;
+  //Create a weatherModel object
+  WeatherModel weatherModel = WeatherModel();
 
-  //TODO: Step 31 - Override the initState(), try and print the locationWeather property (widget.locationWeather)
-  //TODO: Step 33 - In the initState(), pass the widget.locationWeather to the updateUI() method
+  // Override the initState(), try and print the locationWeather property (widget.locationWeather)
+  @override
+  void initState() {
+    super.initState();
+    updateUI(widget.locationWeather);
+  }
 
-  //TODO: Step 32 - Create a updateUI() method that receives a dynamic weatherData property. Extract the temp, weather id and city name value into here
-  //TODO: Step 36 - In the updateUI() method, call the getWeatherIcon and getWeatherMessage to get appropriate values to be displayed
-  //TODO: Step 37 - Wrap the code in the updateUI() method in the setState() method
+  //Create a updateUI() method that receives a dynamic weatherData property.
+  void updateUI(var weatherData) {
+    setState(() {
+      double temperature = weatherData['main']['temp'];
+      temp = temperature.toInt();
+      //Call the getWeatherIcon and getWeatherMessage to get appropriate values to be displayed
+      int condition = weatherData['weather'][0]['id'];
+      weatherIcon = weatherModel.getWeatherIcon(condition!);
+      weatherMessage = weatherModel.getMessage(temp!);
+      city_name = weatherData['name'];
+    });
+  }
+
   //TODO: Step 40 - What if weatherData is null? What happens then? Update the properties accordingly
 
   @override
@@ -43,7 +65,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      //TODO: Step 39 - Call the getLocationWeather() method and updateUI() methods
+                      //Call the getLocationWeather() method and updateUI() methods
+                      var weatherData = weatherModel.getLocationWeather();
+                      updateUI(weatherData);
                     },
                     child: Icon(
                       Icons.near_me,
@@ -70,12 +94,11 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: [
                     Text(
-                      //TODO: Step 34 - Replace the text with temp property
-                      '32°',
+                      temp.toString(),
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '☀️',
+                      weatherIcon ?? '☀️',
                       style: kConditionTextStyle,
                     ),
                   ],
@@ -84,7 +107,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  "$weatherMessage in $city_name!",
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
@@ -96,11 +119,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-// double temp = weatherData['main']['temp'];
-// int condition = weatherData['weather'][0]['id'];
-// String city_name = weatherData['name'];
-//
-// print('Temp: $temp');
-// print('Condition: $condition');
-// print('City Name: $city_name');

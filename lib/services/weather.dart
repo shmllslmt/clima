@@ -1,6 +1,24 @@
+import 'location.dart';
+import 'networking.dart';
+
+const String apiKey = '93228ccfc3f4697fe4ff3c5014d01d20';
+
 class WeatherModel {
 
-  //TODO: Step 38 - Create a getLocationWeather() method that refactor the location and weather data retrieval from the getLocationData() method in LoadingScreen
+  //Create a getLocationWeather() method that refactor the location and weather data retrieval from the getLocationData() method in LoadingScreen
+  Future<dynamic> getLocationWeather() async {
+    //Create a Location object
+    Location location = Location();
+    //Call the getCurrentLocation() method
+    await location.getCurrentLocation();
+
+    //Create a NetworkHelper object, then call its getData() method
+    NetworkHelper networkHelper = NetworkHelper(url: 'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
+
+    var weatherData = await networkHelper.getData();
+
+    return weatherData;
+  }
 
   String getWeatherIcon(int condition) {
     if (condition < 300) {
