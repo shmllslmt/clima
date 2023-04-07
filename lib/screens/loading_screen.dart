@@ -1,6 +1,7 @@
 import 'package:clima_flutter/screens/location_screen.dart';
 import 'package:clima_flutter/services/weather.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       //Go to LocationScreen using Navigator.push()
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return LocationScreen(
+          // Pass the weatherData value to the LocationScreen
           locationWeather: weatherData,
         );
       }));
@@ -39,9 +41,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        //TODO: Step 27 - Add the flutter spinkit dependency, then add the SpinKitDoubleBounce widget as the child of the Center widget
-        //TODO: Step 28 - Change the color to white, and size to 100
-        child: null,
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100,
+        ),
       ),
     );
   }

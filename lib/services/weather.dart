@@ -20,6 +20,20 @@ class WeatherModel {
     return weatherData;
   }
 
+  Future<dynamic> getCityWeather(String cityName) async {
+    //Create a Location object
+    Location location = Location();
+    //Call the getCurrentLocation() method
+    await location.getCurrentLocation();
+
+    //Create a NetworkHelper object, then call its getData() method
+    NetworkHelper networkHelper = NetworkHelper(url: 'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$apiKey&units=metric');
+
+    var weatherData = await networkHelper.getData();
+
+    return weatherData;
+  }
+
   String getWeatherIcon(int condition) {
     if (condition < 300) {
       return '🌩';

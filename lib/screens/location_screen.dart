@@ -1,3 +1,4 @@
+import 'package:clima_flutter/screens/city_screen.dart';
 import 'package:clima_flutter/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_flutter/utilities/constants.dart';
@@ -30,6 +31,15 @@ class _LocationScreenState extends State<LocationScreen> {
   //Create a updateUI() method that receives a dynamic weatherData property.
   void updateUI(var weatherData) {
     setState(() {
+      //What if weatherData is null? What happens then?
+      if(weatherData == null) {
+        temp = 0;
+        weatherIcon = 'Error';
+        weatherMessage = 'Unable to retrieve information';
+        city_name = 'any city';
+
+        return;
+      }
       double temperature = weatherData['main']['temp'];
       temp = temperature.toInt();
       //Call the getWeatherIcon and getWeatherMessage to get appropriate values to be displayed
@@ -39,8 +49,6 @@ class _LocationScreenState extends State<LocationScreen> {
       city_name = weatherData['name'];
     });
   }
-
-  //TODO: Step 40 - What if weatherData is null? What happens then? Update the properties accordingly
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +84,17 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      //TODO: Step 41 - Go to the CityScreen using the Navigator.push()
-                      //TODO: Step 44 - A dynamic property will receive the output of Navigator.push()
-                      //TODO: Step 45 - If the dynamic property isn't null, get weather data based on the cityName, then updateUI()
+                    onPressed: () async {
+                      //Go to the CityScreen using the Navigator.push()
+                      var typedCity = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return CityScreen();
+                      }));
+
+                      //If the dynamic property isn't null, get weather data based on the cityName, then updateUI()
+                      if(typedCity != null) {
+                        var weatherData = await weatherModel.getCityWeather(typedCity);
+                        updateUI(weatherData);
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
