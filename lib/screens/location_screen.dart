@@ -72,9 +72,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       //Call the getLocationWeather() method and updateUI() methods
-                      var weatherData = weatherModel.getLocationWeather();
+                      var weatherData = await weatherModel.getLocationWeather();
                       updateUI(weatherData);
                     },
                     child: Icon(
