@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:clima_flutter/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
-  //TODO: Step 27 - Create a final locationWeather property
+  //TODO: Step 29 - Create a final locationWeather property
   const LocationScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,12 +10,16 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  //TODO: Step 33 - Create a weatherModel object
-  //TODO: Step 29 - Override the initState(), try and print the locationWeather property (widget.locationWeather)
-  //TODO: Step 31 - Pass the widget.locationWeather to the updateUI() method
+  //TODO: Step 35 - Create a weatherModel object
 
-  //TODO: Step 30 - Create a updateUI() method that receives a dynamic weatherData property. It extract the temp, weather id and city name value into three appropriate properties
-  //TODO: Step 34 - Call the getWeatherIcon and getWeatherMessage to get the appropriate value to be displayed
+  //TODO: Step 31 - Override the initState(), try and print the locationWeather property (widget.locationWeather)
+  //TODO: Step 33 - In the initState(), pass the widget.locationWeather to the updateUI() method
+
+  //TODO: Step 32 - Create a updateUI() method that receives a dynamic weatherData property. Extract the temp, weather id and city name value into here
+  //TODO: Step 36 - In the updateUI() method, call the getWeatherIcon and getWeatherMessage to get appropriate values to be displayed
+  //TODO: Step 37 - Wrap the code in the updateUI() method in the setState() method
+  //TODO: Step 40 - What if weatherData is null? What happens then? Update the properties accordingly
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +43,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      //TODO: Step 35 - Call the getWeatherData method and update UI
+                      //TODO: Step 39 - Call the getLocationWeather() method and updateUI() methods
                     },
                     child: Icon(
                       Icons.near_me,
@@ -49,7 +53,9 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      //TODO: Step 36 - Go to the CityScreen using the Navigator.push()
+                      //TODO: Step 41 - Go to the CityScreen using the Navigator.push()
+                      //TODO: Step 44 - A dynamic property will receive the output of Navigator.push()
+                      //TODO: Step 45 - If the dynamic property isn't null, get weather data based on the cityName, then updateUI()
                     },
                     child: Icon(
                       Icons.location_city,
@@ -64,7 +70,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: [
                     Text(
-                      //TODO: Step 32 - Replace the text with temp property
+                      //TODO: Step 34 - Replace the text with temp property
                       '32°',
                       style: kTempTextStyle,
                     ),
@@ -90,3 +96,11 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+
+// double temp = weatherData['main']['temp'];
+// int condition = weatherData['weather'][0]['id'];
+// String city_name = weatherData['name'];
+//
+// print('Temp: $temp');
+// print('Condition: $condition');
+// print('City Name: $city_name');

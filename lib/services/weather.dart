@@ -1,4 +1,7 @@
 class WeatherModel {
+
+  //TODO: Step 38 - Create a getLocationWeather() method that refactor the location and weather data retrieval from the getLocationData() method in LoadingScreen
+
   String getWeatherIcon(int condition) {
     if (condition < 300) {
       return '🌩';
